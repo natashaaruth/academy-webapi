@@ -1,0 +1,23 @@
+{
+  "name": "BaseModel",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "forceId": true,
+  "mixins": {
+    "MongoDocument": {},
+    "Audit": {}
+  },
+  "scope": {
+    "where": {
+      "_deleted": false
+    }
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

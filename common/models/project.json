@@ -1,0 +1,36 @@
+{
+  "name": "Project",
+  "plural": "Projects",
+  "base": "BaseModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true,
+    "mongodb": {
+      "collection": "projects"
+    }
+  },
+  "forceId": true,
+  "properties": {
+    "code": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "backlogs": {
+      "type": "hasMany",
+      "model": "Backlog",
+      "foreignKey": "projectId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

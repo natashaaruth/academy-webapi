@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "mongodb-ds"
+  },
+  "AccessToken": {
+    "dataSource": "mongodb-ds",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "mongodb-ds",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "mongodb-ds",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "mongodb-ds",
+    "public": false
+  },
+  "BaseModel": {
+    "dataSource": null,
+    "public": false
+  },
+  "Project": {
+    "dataSource": "mongodb-ds",
+    "public": true
+  },
+  "Backlog": {
+    "dataSource": "mongodb-ds",
+    "public": true
+  },
+  "Task": {
+    "dataSource": "mongodb-ds",
+    "public": true
+  },
+  "Account": {
+    "dataSource": "mongodb-ds",
+    "public": true
+  }
+}

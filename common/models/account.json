@@ -1,0 +1,22 @@
+{
+  "name": "Account",
+  "plural": "Accounts",
+  "base": "User",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true,
+    "mongodb": {
+      "collection": "accounts"
+    }
+  },
+  "forceId": true,
+  "mixins": {
+    "MongoDocument": {},
+    "Audit": {}
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
