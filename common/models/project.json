@@ -29,6 +29,11 @@
       "type": "hasMany",
       "model": "Backlog",
       "foreignKey": "projectId"
+    },
+    "tasks": {
+      "type": "hasMany",
+      "model": "Task",
+      "foreignKey": "projectId"
     }
   },
   "acls": [],

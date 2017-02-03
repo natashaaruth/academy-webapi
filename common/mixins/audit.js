@@ -4,7 +4,7 @@ module.exports = function (Model, options) {
   Model.defineProperty('_deleted', { type: Boolean, default: false });
   Model.defineProperty('_createdDate', { type: Date, default: '$now' });
   Model.defineProperty('_createdBy', { type: String, default: '' });
-  Model.defineProperty('_createdAgent', { type: String, default: '' });
+  Model.defineProperty('_createAgent', { type: String, default: '' });
   Model.defineProperty('_updatedDate', { type: Date, default: '$now' });
   Model.defineProperty('_updatedBy', { type: String, default: '' });
   Model.defineProperty('_updateAgent', { type: String, default: '' });

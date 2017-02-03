@@ -58,6 +58,11 @@
       "type": "belongsTo",
       "model": "Backlog",
       "foreignKey": "backlogId"
+    },
+    "project": {
+      "type": "belongsTo",
+      "model": "Project",
+      "foreignKey": "projectId"
     }
   },
   "acls": [],

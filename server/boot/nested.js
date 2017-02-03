@@ -2,5 +2,5 @@
 
 module.exports = function (server) {
   var Project = server.models.Project;
-  Project.nestRemoting("tasks")
+  // Project.nestRemoting("tasks")
 };
