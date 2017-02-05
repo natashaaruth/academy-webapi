@@ -16,7 +16,13 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "assignments": {
+      "type": "hasMany",
+      "model": "Assignment",
+      "foreignKey": "accountId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

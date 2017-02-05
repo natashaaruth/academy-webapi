@@ -1,0 +1,33 @@
+{
+  "name": "Assignment",
+  "plural": "Assignments",
+  "base": "BaseModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "remark": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "account": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "accountId"
+    },
+    "task": {
+      "type": "hasOne",
+      "model": "Task",
+      "foreignKey": "assignmentId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -26,6 +26,11 @@
     "description": {
       "type": "string"
     },
+    "date": {
+      "type": "date",
+      "required": true,
+      "default": "$now"
+    },
     "budget": {
       "type": "number",
       "required": true,
@@ -63,6 +68,11 @@
       "type": "belongsTo",
       "model": "Project",
       "foreignKey": "projectId"
+    },
+    "assignment": {
+      "type": "belongsTo",
+      "model": "Assignment",
+      "foreignKey": "assignmentId"
     }
   },
   "acls": [],
