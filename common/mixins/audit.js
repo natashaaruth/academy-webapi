@@ -11,13 +11,15 @@ module.exports = function (Model, options) {
 
   Model.observe('before save', function event(context, next) {
     var data = context.instance || context.data;
+    var accessToken = context.options.accessToken;
+    var actor = accessToken && accessToken.userId ? accessToken.userId : "#anonymous";
     if (context.instance) {
       data._createdDate = Date.now();
-      data._createdBy = context.options.accessToken.userId;
+      data._createdBy = actor;
     }
 
     data._updatedDate = Date.now();
-    data._updatedBy = context.options.accessToken.userId;
+    data._updatedBy = actor;
     next();
   });
 }

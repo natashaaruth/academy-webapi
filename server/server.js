@@ -2,12 +2,15 @@
 
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-
 var app = module.exports = loopback();
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
-app.start = function() {
+var flash = require('express-flash');
+
+app.start = function () {
   // start the web server
-  return app.listen(function() {
+  return app.listen(function () {
     app.emit('started');
     var baseUrl = app.get('url').replace(/\/$/, '');
     console.log('Web server listening at: %s', baseUrl);
@@ -20,8 +23,20 @@ app.start = function() {
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
-boot(app, __dirname, function(err) {
+boot(app, __dirname, function (err) {
   if (err) throw err;
+
+  // app.use(loopback.token({
+  //   headers: ['authorization']
+  // }));
+
+  // app.middleware('session:before', cookieParser(app.get('cookieSecret')));
+  app.middleware('session', session({
+    secret: 'kitty',
+    saveUninitialized: true,
+    resave: true,
+  }));
+  app.use(flash());
 
   // start the server if `$ node server.js`
   if (require.main === module)

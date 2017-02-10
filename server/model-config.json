@@ -3,6 +3,7 @@
     "sources": [
       "loopback/common/models",
       "loopback/server/models",
+      "loopback-component-passport/lib/models",
       "../common/models",
       "./models"
     ],
@@ -14,7 +15,10 @@
     ]
   },
   "User": {
-    "dataSource": "mongodb-ds"
+    "dataSource": "mongodb-ds",
+    "options": {
+      "emailVerificationRequired": true
+    }
   },
   "AccessToken": {
     "dataSource": "mongodb-ds",
@@ -29,6 +33,14 @@
     "public": false
   },
   "Role": {
+    "dataSource": "mongodb-ds",
+    "public": false
+  },
+  "UserCredential": {
+    "dataSource": "mongodb-ds",
+    "public": false
+  },
+  "UserIdentity": {
     "dataSource": "mongodb-ds",
     "public": false
   },
@@ -50,10 +62,25 @@
   },
   "Account": {
     "dataSource": "mongodb-ds",
-    "public": true
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
   },
   "Assignment": {
     "dataSource": "mongodb-ds",
     "public": true
+  },
+  "Profile": {
+    "dataSource": "mongodb-ds",
+    "public": true
+  },
+  "AccountIdentity": {
+    "dataSource": "mongodb-ds",
+    "public": false
+  },
+  "AccountCredential": {
+    "dataSource": "mongodb-ds",
+    "public": false
   }
 }

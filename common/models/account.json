@@ -21,8 +21,30 @@
       "type": "hasMany",
       "model": "Assignment",
       "foreignKey": "accountId"
+    },
+    "profile": {
+      "type": "hasOne",
+      "model": "Profile",
+      "foreignKey": "accountId"
+    },
+    "identities": {
+      "type": "hasMany",
+      "model": "AccountIdentity",
+      "foreignKey": "accountId"
+    },
+    "credentials": {
+      "type": "hasMany",
+      "model": "AccountCredential",
+      "foreignKey": "accountId"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }
