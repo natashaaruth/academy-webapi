@@ -34,6 +34,11 @@
       "type": "hasMany",
       "model": "Task",
       "foreignKey": "projectId"
+    },
+    "iterations": {
+      "type": "hasMany",
+      "model": "Iteration",
+      "foreignKey": "projectId"
     }
   },
   "acls": [],

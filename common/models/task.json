@@ -69,10 +69,10 @@
       "model": "Project",
       "foreignKey": "projectId"
     },
-    "assignment": {
-      "type": "belongsTo",
+    "assignments": {
+      "type": "hasMany",
       "model": "Assignment",
-      "foreignKey": "assignmentId"
+      "foreignKey": "taskId"
     }
   },
   "acls": [],

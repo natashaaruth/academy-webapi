@@ -1,6 +1,6 @@
 'use strict';
-
-var app = require("../../server/server");
+var app = require('../../server/server');
+var codeGenerator = require("../utils/code-generator");
 
 module.exports = function (Task) {
   Task.validatesUniquenessOf('code', { message: 'code already exists' });
@@ -9,12 +9,15 @@ module.exports = function (Task) {
     var Backlog = app.models.Backlog;
     var data = context.instance || context.data;
 
-    Backlog.findById(data.backlogId, (err, backlog) => {
-      if (err)
-        return next(err);
-
-      data.projectId = backlog.projectId;
-      next();
-    })
+    if (context.isNewInstance) {
+      data.code = codeGenerator();
+      Backlog.findById(data.backlogId, (err, backlog) => {
+        if (err)
+          return next(err);
+        data.backlogId = backlog.id;
+        data.projectId = backlog.projectId;
+      })
+    }
+    next();
   })
 };

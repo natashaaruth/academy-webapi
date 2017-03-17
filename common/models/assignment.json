@@ -13,6 +13,14 @@
     },
     "remark": {
       "type": "string"
+    },
+    "elapsed": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "status": {
+      "type": "string"
     }
   },
   "validations": [],
@@ -23,9 +31,14 @@
       "foreignKey": "accountId"
     },
     "task": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "Task",
-      "foreignKey": "assignmentId"
+      "foreignKey": "taskId"
+    },
+    "iteration": {
+      "type": "belongsTo",
+      "model": "Iteration",
+      "foreignKey": "iterationId"
     }
   },
   "acls": [],

@@ -22,7 +22,14 @@
   },
   "AccessToken": {
     "dataSource": "mongodb-ds",
-    "public": false
+    "public": false,
+    "relations": {
+      "user": {
+        "type": "belongsTo",
+        "model": "Account",
+        "foreignKey": "userId"
+      }
+    }
   },
   "ACL": {
     "dataSource": "mongodb-ds",
@@ -82,5 +89,9 @@
   "AccountCredential": {
     "dataSource": "mongodb-ds",
     "public": false
+  },
+  "Iteration": {
+    "dataSource": "mongodb-ds",
+    "public": true
   }
 }

@@ -5,10 +5,11 @@ module.exports = function initializeData(app) {
   var mongoDs = app.dataSources["mongodb-ds"];
 
   async.parallel({
-    accounts: async.apply(initializeAccount)
+    account: async.apply(initializeAccount)
   }, (error, results) => {
     if (error) throw error;
-
+    var account = results.account;
+    createProfile(account)
     console.log('> models created sucessfully');
   })
 
@@ -27,13 +28,31 @@ module.exports = function initializeData(app) {
             username: "academy",
             password: "Standar123",
             email: "academy@moonlay.com"
-          }, (error, user) => {
-            if (error)
-              callback(error);
-          })
+          }, callback)
         }
       })
     });
+  }
+
+  function createProfile(account) {
+    var Profile = app.models.Profile;
+    mongoDs.automigrate("Profile", function (error) {
+      var query = { "where": { accountId: account.id } }
+      Profile.findOne(query, (error, profile) => {
+        if (!profile) {
+          Profile.create({
+            accountId: account.id,
+            firstname: "moonlay",
+            lastname: "academy",
+            dob: new Date(),
+            gender: "male"
+          }, (error, profile) => {
+            if (error)
+              throw error;
+          })
+        }
+      })
+    })
   }
 
 };

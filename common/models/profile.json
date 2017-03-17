@@ -4,7 +4,10 @@
   "base": "BaseModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "mongodb": {
+      "collection": "profile"
+    }
   },
   "properties": {
     "firstname": {
