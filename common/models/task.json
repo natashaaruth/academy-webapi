@@ -73,6 +73,11 @@
       "type": "hasMany",
       "model": "Assignment",
       "foreignKey": "taskId"
+    },
+    "timerecords": {
+      "type": "hasMany",
+      "model": "Timerecord",
+      "foreignKey": "taskId"
     }
   },
   "acls": [],

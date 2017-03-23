@@ -93,5 +93,9 @@
   "Iteration": {
     "dataSource": "mongodb-ds",
     "public": true
+  },
+  "Timerecord": {
+    "dataSource": "mongodb-ds",
+    "public": true
   }
 }

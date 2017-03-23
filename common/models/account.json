@@ -36,6 +36,11 @@
       "type": "hasMany",
       "model": "AccountCredential",
       "foreignKey": "accountId"
+    },
+    "timerecords": {
+      "type": "hasMany",
+      "model": "Timerecord",
+      "foreignKey": "accountId"
     }
   },
   "acls": [

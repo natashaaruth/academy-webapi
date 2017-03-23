@@ -39,6 +39,11 @@
       "type": "hasMany",
       "model": "Iteration",
       "foreignKey": "projectId"
+    },
+    "timerecords": {
+      "type": "hasMany",
+      "model": "Timerecord",
+      "foreignKey": "projectId"
     }
   },
   "acls": [],

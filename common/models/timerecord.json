@@ -1,6 +1,5 @@
 {
-  "name": "Assignment",
-  "plural": "Assignments",
+  "name": "Timerecord",
   "base": "BaseModel",
   "idInjection": true,
   "options": {
@@ -11,15 +10,18 @@
       "type": "date",
       "required": true
     },
-    "remark": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "duration": {
+      "type": "number",
+      "required": true
+    },
+    "description": {
       "type": "string"
     },
-    "elapsed": {
-      "type": "number",
-      "required": true,
-      "default": 0
-    },
-    "status": {
+    "remark": {
       "type": "string"
     }
   },
@@ -30,15 +32,10 @@
       "model": "Account",
       "foreignKey": "accountId"
     },
-    "task": {
+    "project": {
       "type": "belongsTo",
-      "model": "Task",
-      "foreignKey": "taskId"
-    },
-    "iteration": {
-      "type": "belongsTo",
-      "model": "Iteration",
-      "foreignKey": "iterationId"
+      "model": "Project",
+      "foreignKey": "projectId"
     }
   },
   "acls": [],
