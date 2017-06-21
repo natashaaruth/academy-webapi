@@ -14,6 +14,11 @@
     "remark": {
       "type": "string"
     },
+    "budget": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
     "elapsed": {
       "type": "number",
       "required": true,
@@ -39,6 +44,11 @@
       "type": "belongsTo",
       "model": "Iteration",
       "foreignKey": "iterationId"
+    },
+    "timerecords": {
+      "type": "hasMany",
+      "model": "Timerecord",
+      "foreignKey": "assignmentId"
     }
   },
   "acls": [],

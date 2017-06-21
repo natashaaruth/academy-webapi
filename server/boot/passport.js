@@ -3,7 +3,7 @@ var loopback = require("loopback");
 var loopbackPassport = require('loopback-component-passport');
 var PassportConfigurator = loopbackPassport.PassportConfigurator;
 
-module.exports = function (app) {
+module.exports = function(app) {
 
   // Passport configurators..
   var passportConfigurator = new PassportConfigurator(app);
@@ -12,7 +12,8 @@ module.exports = function (app) {
   var config = {};
   try {
     config = require('../../providers.json');
-  } catch (err) {
+  }
+  catch (err) {
     console.trace(err);
     process.exit(1); // fatal
   }
@@ -39,14 +40,14 @@ module.exports = function (app) {
     passportConfigurator.configureProvider(s, c);
   }
 
-  app.get('/local', function (req, res, next) {
+  app.get('/local', function(req, res, next) {
     res.send({
       user: req.user,
       url: req.url,
     });
   });
 
-  app.get('/auth/account', function (req, res, next) {
+  app.get('/auth/account', function(req, res, next) {
     res.send({
       user: req.user,
       url: req.url,

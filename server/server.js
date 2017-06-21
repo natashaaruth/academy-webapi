@@ -3,10 +3,10 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 var app = module.exports = loopback();
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
+// var cookieParser = require('cookie-parser');
+// var session = require('express-session');
 
-var flash = require('express-flash');
+// var flash = require('express-flash');
 
 app.start = function () {
   // start the web server
@@ -31,12 +31,12 @@ boot(app, __dirname, function (err) {
   // }));
 
   // app.middleware('session:before', cookieParser(app.get('cookieSecret')));
-  app.middleware('session', session({
-    secret: 'kitty',
-    saveUninitialized: true,
-    resave: true,
-  }));
-  app.use(flash());
+  // app.middleware('session', session({
+  //   secret: 'kitty',
+  //   saveUninitialized: true,
+  //   resave: true,
+  // }));
+  // app.use(flash());
 
   // start the server if `$ node server.js`
   if (require.main === module)

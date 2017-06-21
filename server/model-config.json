@@ -14,11 +14,20 @@
       "./mixins"
     ]
   },
-  "User": {
+  "Account": {
     "dataSource": "mongodb-ds",
+    "public": true,
     "options": {
       "emailVerificationRequired": true
     }
+  },
+  "AccountIdentity": {
+    "dataSource": "mongodb-ds",
+    "public": false
+  },
+  "AccountCredential": {
+    "dataSource": "mongodb-ds",
+    "public": false
   },
   "AccessToken": {
     "dataSource": "mongodb-ds",
@@ -43,14 +52,6 @@
     "dataSource": "mongodb-ds",
     "public": false
   },
-  "UserCredential": {
-    "dataSource": "mongodb-ds",
-    "public": false
-  },
-  "UserIdentity": {
-    "dataSource": "mongodb-ds",
-    "public": false
-  },
   "BaseModel": {
     "dataSource": null,
     "public": false
@@ -67,13 +68,6 @@
     "dataSource": "mongodb-ds",
     "public": true
   },
-  "Account": {
-    "dataSource": "mongodb-ds",
-    "public": true,
-    "options": {
-      "emailVerificationRequired": true
-    }
-  },
   "Assignment": {
     "dataSource": "mongodb-ds",
     "public": true
@@ -82,20 +76,16 @@
     "dataSource": "mongodb-ds",
     "public": true
   },
-  "AccountIdentity": {
-    "dataSource": "mongodb-ds",
-    "public": false
-  },
-  "AccountCredential": {
-    "dataSource": "mongodb-ds",
-    "public": false
-  },
   "Iteration": {
     "dataSource": "mongodb-ds",
     "public": true
   },
   "Timerecord": {
     "dataSource": "mongodb-ds",
+    "public": true
+  },
+  "Me": {
+    "dataSource": null,
     "public": true
   }
 }

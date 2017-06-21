@@ -26,18 +26,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "account": {
-      "type": "belongsTo",
-      "model": "Account",
-      "foreignKey": "accountId"
-    },
-    "project": {
-      "type": "belongsTo",
-      "model": "Project",
-      "foreignKey": "projectId"
-    }
-  },
+  "relations": {},
   "acls": [],
   "methods": {}
 }

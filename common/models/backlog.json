@@ -48,11 +48,6 @@
       "type": "hasMany",
       "model": "Task",
       "foreignKey": "backlogId"
-    },
-    "timerecords": {
-      "type": "hasMany",
-      "model": "Timerecord",
-      "foreignKey": "backlogId"
     }
   },
   "acls": [],
