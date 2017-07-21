@@ -16,10 +16,9 @@ module.exports = function(Assignment) {
                 return cb(err);
             else{
                 var totalPersentasi = 0.0;
-                var totalDuration = 0.0; 
+             //   var totalDuration = 0.0; 
                 if(assignments.budget != 0 )               
                     totalPersentasi = ((assignments.elapsed/(assignments.budget*3600))*100);
-
                 totalPersentasi =  totalPersentasi.toFixed(4);
                 // console.log("Total Persentasi : "+ totalPersentasi);
                 cb(null,  totalPersentasi);
