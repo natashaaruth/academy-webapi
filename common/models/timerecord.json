@@ -26,7 +26,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "assignment": {
+      "type": "belongsTo",
+      "model": "Assigment",
+      "foreignKey": "assigmentId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

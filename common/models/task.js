@@ -80,7 +80,7 @@ Task.getElapsedbyAssignment = function (id, cb)
 
 Task.remoteMethod("getElapsedbyAssignment",
 {
-    accepts:{arg: 'id', type: 'string', required: true},
+    accepts:[{arg: 'id', type: 'string', required: true}],
     http:{path: '/:id/actual', verb: "get", errorStatus: 401},
     returns:{arg: "Actual", type:"decimal"}})
 };       

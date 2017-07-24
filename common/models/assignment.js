@@ -38,19 +38,19 @@ Assignment.remoteMethod("assignmentProgress",
 
 Assignment.validatesUniquenessOf('code', { message: 'code already exists' });
 
-  Assignment.observe("before save", (context, next) => {
-    var Backlog = app.models.Backlog;
-    var data = context.instance || context.data;
+//   Assignment.observe("before save", (context, next) => {
+//     var Backlog = app.models.Backlog;
+//     var data = context.instance || context.data;
 
-    if (context.isNewInstance) {
-      data.code = codeGenerator();
-      Backlog.findById(data.backlogId, (err, backlog) => {
-        if (err)
-          return next(err);
-        data.backlogId = backlog.id;
-        data.projectId = backlog.projectId;
-      })
-    }
-    next();
-  })
+//     if (context.isNewInstance) {
+//       data.code = codeGenerator();
+//       Backlog.findById(data.backlogId, (err, backlog) => {
+//         if (err)
+//           return next(err);
+//         data.backlogId = backlog.id;
+//         data.projectId = backlog.projectId;
+//       })
+//     }
+//     next();
+//   })
           };
