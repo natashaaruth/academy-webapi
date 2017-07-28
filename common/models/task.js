@@ -16,10 +16,8 @@ Task.getElapsedbyAssignment = function (id, cb)
         }, 0);
         cb(null, sum);
     }
-})
-    next();
-  })
-
+})};
+    
   //Mengambil task 5 hari sebelum close
   Task.getDueTask = function(cb) {
     var startDate = (new Date()).setHours(0,0,0,0);
@@ -46,7 +44,7 @@ Task.getElapsedbyAssignment = function (id, cb)
     returns: {arg: 'Task', type: 'object', root: true}
         
    });
-};
+
 
 Task.remoteMethod("getElapsedbyAssignment",
 {
