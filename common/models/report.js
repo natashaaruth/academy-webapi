@@ -30,36 +30,7 @@ module.exports = function(Report) {
             type: 'string'
         }
         }
-    );
-
-    Report.getAssignmentsIncludeTask = function(account_id,cb){
-        app.models.Assignment.find(
-            {
-                where:
-                {
-                accountId: account_id
-            },
-            include:{
-                relation: 'task'
-            }
-           },function(err, assignments){
-        if(err || account_id === 0)
-            return cb(err);
-        else {
-            cb(null, assignments);
-        }
-        })
-    };
-
-
-    Report.remoteMethod("getAssignmentsIncludeTask",
-        {
-            accepts: [{ arg: 'accountId', type: 'string'}],
-            http: { path:"/account/:account_id/assignments/", verb: "get", errorStatus: 401,},
-            description: ["Mengambil assignments termasuk task setiap akun"],
-            returns: {arg: "Assignments", type: "object"}
-    })
-    
+    );    
 
     //get open assignment
     Report.getAssignmentsOpenIncludeTask = function(account_id,cb){
@@ -391,63 +362,87 @@ module.exports = function(Report) {
     
 
     //sekarang kita berada dari sini kebawahhh        
-    
-    // Report.GetProjectperAccount = function(account_id,cb){
-    //     app.models.Assignment.find({where: {accountId: account_id}},function(err, assignments){
-    //     if(err || account_id === 0)
-    //         return cb(err);
-    //     else {
-    //         var projects = assignments.reduce(function(last, d) {
-    //             if (d.projectId===project_id){
-    //                 console.log(d.projectId)
-    //                 return d.elapsed + last;
-    //             }
-    //         }, 0);
-            
-    //         cb(null, projects);
-    //     }
-    //     }) 
-    // };
+    //belum//hasil masih duplikat
 
-    // Report.remoteMethod("getEfficiencybyUserInProject",
-    // {
-    //     accepts: [{ arg: 'project_id', type: 'string'},{ arg: 'account_id', type: 'string'}],
-    //     http: { path:"/account/:account_id/project/:project_id/efficiency/", verb: "get", errorStatus: 401,},
-    //     description: ["Mengambil efisiensi setiap akun berdasarkan project."],
-    //     returns: {arg: "efficiency", type: "array",root:true}
-    // })
-
-    
-    //belum selesai
-    Report.getEfficiencybyUserInProject = function(project_id,account_id,cb){
+    Report.getProjectperAccount = function(account_id,cb){
+        var projects=[];
         app.models.Assignment.find({where: {accountId: account_id}},function(err, assignments){
         if(err || account_id === 0)
-            return cb(err);
+           return cb(err);
         else {
-            var sumElapsed = assignments.reduce(function(last, d) {
-                if (d.projectId===project_id){
-                    return d.elapsed + last;
+            var promiseProject = [];            
+            for(var a of assignments){
+                var temp = app.models.Project.findOne({where: {id: a.project_id}});
+                promiseProject.push(temp);     
+            } 
+            Promise.all(promiseProject).then(results => {
+
+            var out = [];
+            for (var i = 0, l = results.length; i < l; i++) {
+                var unique = true;
+                for (var j = 0, k = out.length; j < k; j++) {
+                    if (results[i].code === out[j].code) {
+                        unique = false;
+                    }
                 }
-            }, 0);
-            var sumBudget = assignments.reduce(function(last, d) {
-                if (d.projectId===project_id){
-                    return d.budget + last;
+                if (unique) {
+                    out.push(results[i]);
                 }
-            }, 0);
-            var efficiency = (sumElapsed/sumBudget)*100 ;
-            cb(null, efficiency);
+            }
+                cb(null, out);
+            })
         }
         }) 
     };
 
-    Report.remoteMethod("getEfficiencybyUserInProject",
+    Report.remoteMethod("getProjectperAccount",
     {
-        accepts: [{ arg: 'project_id', type: 'string'},{ arg: 'account_id', type: 'string'}],
-        http: { path:"/account/:account_id/project/:project_id/efficiency/", verb: "get", errorStatus: 401,},
-        description: ["Mengambil efisiensi setiap akun berdasarkan project."],
-        returns: {arg: "efficiency", type: "array",root:true}
+        accepts: [{ arg: 'account_id', type: 'string'}],
+        http: { path:"/account/:account_id/project", verb: "get", errorStatus: 401,},
+        description: ["Mengambil project setiap akun."],
+        returns: {arg: "Projects", type: "array",root:true}
     })
 
+    Report.countProjectperAccount = function(account_id,cb){
+        var projects=[];
+        app.models.Assignment.find({where: {accountId: account_id}},function(err, assignments){
+        if(err || account_id === 0)
+           return cb(err);
+        else {
+            var promiseProject = [];            
+            for(var a of assignments){
+                var temp = app.models.Project.findOne({where: {id: a.project_id}});
+                promiseProject.push(temp);     
+            } 
+            Promise.all(promiseProject).then(results => {
+
+                var out = [];
+            for (var i = 0, l = results.length; i < l; i++) {
+                var unique = true;
+                for (var j = 0, k = out.length; j < k; j++) {
+                    if (results[i].code === out[j].code) {
+                        unique = false;
+                    }
+                }
+                if (unique) {
+                    out.push(results[i]);
+                }
+            }
+                cb(null, out.length);
+            })
+        }
+        }) 
+    };
+
+    Report.remoteMethod("countProjectperAccount",
+    {
+        accepts: [{ arg: 'account_id', type: 'string'}],
+        http: { path:"/account/:account_id/project/count", verb: "get", errorStatus: 401,},
+        description: ["Mengambil project setiap akun."],
+        returns: {arg: "Projects", type: "object",root:true}
+    })
+
+   
 };
 
  
