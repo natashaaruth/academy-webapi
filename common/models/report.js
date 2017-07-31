@@ -359,10 +359,74 @@ module.exports = function(Report) {
         returns: {arg: "Assignments", type: "array",root: true}
     })
 
-    
+    Report.getBudgetPerDate = function(account_id,date_start,date_end,cb){
+        var start_time = new Date(date_start);
+        var end_time = new Date(date_end);
 
-    //sekarang kita berada dari sini kebawahhh        
-    //belum//hasil masih duplikat
+        start_time=start_time.toUTCString();
+        end_time=end_time.toUTCString();
+
+        app.models.Assignment.find (
+            {
+                include: 'task',
+                where:
+                {accountId: account_id,
+            date:{
+                between: [start_time, end_time]
+            }}},
+            function(err, assignments){
+        if(err || account_id === 0)
+            return cb(err);
+        else {
+            var sumBudget = assignments.reduce(function(last, d) {
+                return d.budget + last;
+            }, 0);
+            cb(null, sumBudget);
+        }
+        }) 
+    };
+    Report.remoteMethod("getBudgetPerDate",
+    {
+        accepts: [{ arg: 'account_id', type: 'string'},{ arg: 'date_start', type: 'string'},{ arg: 'date_end', type: 'string'}],
+        http: { path:"/account/:account_id/:date_start/to/:date_end/assignments/budget", verb: "get", errorStatus: 401,},
+        description: ["Get total Budget in Date range per Account."],
+        returns: {arg: "Total Budget", type: "object",root: true}
+    })
+    
+    Report.getElapsedPerDate = function(account_id,date_start,date_end,cb){
+        var start_time = new Date(date_start);
+        var end_time = new Date(date_end);
+
+        start_time=start_time.toUTCString();
+        end_time=end_time.toUTCString();
+
+        app.models.Assignment.find (
+            {
+                include: 'task',
+                where:
+                {accountId: account_id,
+            date:{
+                between: [start_time, end_time]
+            }}},
+            function(err, assignments){
+        if(err || account_id === 0)
+            return cb(err);
+        else {
+            
+            var sumElapsed = assignments.reduce(function(last, d) {
+                return d.elapsed + last;
+            }, 0);
+            cb(null, sumElapsed);
+        }
+        }) 
+    };
+    Report.remoteMethod("getElapsedPerDate",
+    {
+        accepts: [{ arg: 'account_id', type: 'string'},{ arg: 'date_start', type: 'string'},{ arg: 'date_end', type: 'string'}],
+        http: { path:"/account/:account_id/:date_start/to/:date_end/assignments/elapsed", verb: "get", errorStatus: 401,},
+        description: ["Get Elapsed Time in Date range per Account."],
+        returns: {arg: "Elapsed time", type: "object",root: true}
+    })  
 
     Report.getProjectperAccount = function(account_id,cb){
         var projects=[];
@@ -376,7 +440,7 @@ module.exports = function(Report) {
                 promiseProject.push(temp);     
             } 
             Promise.all(promiseProject).then(results => {
-
+                //remove duplicates
             var out = [];
             for (var i = 0, l = results.length; i < l; i++) {
                 var unique = true;
@@ -442,7 +506,62 @@ module.exports = function(Report) {
         returns: {arg: "Projects", type: "object",root:true}
     })
 
-   
+//get assignment project account
+    Report.getAssignmentInProject = function(account_id,project_id,cb){
+        app.models.Assignment.find({where:{accountId: account_id}},function(err, assignments){
+        if(err || account_id === 0)
+            return cb(err);
+        else {
+            var arr = [];
+            for(var a of assignments){   
+                if(a.projectId===project_id){
+                    arr.push(a);
+                }        
+            }
+            cb(null,arr);
+        }
+        }) 
+    };
+
+    Report.remoteMethod("getAssignmentInProject",
+    {
+        accepts: [{ arg: 'account_id', type: 'string'},{ arg: 'project_id', type: 'string'}],
+        http: { path:"/account/:account_id/:project_id/assignments", verb: "get", errorStatus: 401,},
+        description: ["Mengambil assignment yang telah open dari setiap akun."],
+        returns: {arg: "assignments", type: "array",root:true}
+    })
+
+    Report.getEfficiencyPerProject = function(account_id,project_id,cb){
+        app.models.Assignment.find({where: {projectId: project_id}},
+            function(err, assignments){
+        if(err || account_id === 0)
+            return cb(err);
+        else {
+            console.log(assignments)
+            var sumElapsed = assignments.reduce(function(last, d) {
+                return d.elapsed + last;
+            }, 0);
+            var sumBudget = assignments.reduce(function(last, d) {
+                return d.budget + last;
+            }, 0);
+            var efficiency= 0;
+            if((sumBudget!=null&&sumBudget!=0) && (sumElapsed!=null&&sumElapsed!=0)){
+                efficiency = ((sumBudget/sumElapsed)*100).toFixed(2);
+            }else{
+                efficiency = 0;
+            }
+            cb(null, efficiency);
+        }
+        }) 
+    };
+    Report.remoteMethod("getEfficiencyPerProject",
+    {
+        accepts: [{ arg: 'account_id', type: 'string'},{ arg: 'project_id', type: 'string'}],
+        http: { path:"/account/:account_id/:project_id/efficiency/", verb: "get", errorStatus: 401,},
+        description: ["Total efisiensi per akun berdasarkan project."],
+        returns: {arg: "efficiency", type: "object",root: true}
+    })
+
 };
 
  
