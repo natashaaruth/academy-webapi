@@ -136,8 +136,6 @@ module.exports = function(Report) {
         if(err || account_id === 0)
             return cb(err);
         else {
-            console.log()
-            console.log("ini yang open lohh " +count);
             cb(null, count);
         }
         }) 
@@ -201,7 +199,6 @@ module.exports = function(Report) {
             return cb(err);
         else {
             var efficiency;
-            var getData=[];
             var sumElapsed = assignments.reduce(function(last, d) {
                 return d.elapsed + last;
             }, 0);
@@ -210,6 +207,8 @@ module.exports = function(Report) {
             }, 0);
             if(sumBudget!=0&&sumElapsed!=0){
                 efficiency = ((sumBudget/sumElapsed)*100).toFixed(2);
+            }else{
+                efficiency = "Tidak Dapat Dihitung. "
             }
             cb(null, efficiency);
         }
@@ -338,11 +337,13 @@ module.exports = function(Report) {
             {
                 include: 'task',
                 where:
-                {accountId: account_id,
-            date:{
-                between: [start_time, end_time],
-                status: 'open'
-            }}},
+                {   status: "open",
+                    accountId: account_id,
+                    date:{
+                    between: [start_time, end_time]
+                    }
+                }
+            },
             function(err, assignments){
         if(err || account_id === 0)
             return cb(err);
