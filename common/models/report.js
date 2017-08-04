@@ -431,31 +431,31 @@ module.exports = function(Report) {
 
     Report.getProjectperAccount = function(account_id,cb){
         var projects=[];
-        app.models.Assignment.find({where: {accountId: account_id}},function(err, assignments){
+        app.models.Assignment.find({include:"task",scope: {include: "project"},where: {accountId: account_id}},function(err, assignments){
         if(err || account_id === 0)
            return cb(err);
         else {
-            var promiseProject = [];            
-            for(var a of assignments){
-                var temp = app.models.Project.findOne({where: {id: a.project_id}});
-                promiseProject.push(temp);     
-            } 
-            Promise.all(promiseProject).then(results => {
-                //remove duplicates
-            var out = [];
-            for (var i = 0, l = results.length; i < l; i++) {
-                var unique = true;
-                for (var j = 0, k = out.length; j < k; j++) {
-                    if (results[i].code === out[j].code) {
-                        unique = false;
-                    }
-                }
-                if (unique) {
-                    out.push(results[i]);
-                }
-            }
-                cb(null, out);
-            })
+            // var promiseProject = [];            
+            // for(var a of assignments){
+            //     var temp = app.models.Project.findOne({where: {id: a.project_id}});
+            //     promiseProject.push(temp);     
+            // } 
+            // Promise.all(promiseProject).then(results => {
+            //     //remove duplicates
+            // var out = [];
+            // for (var i = 0, l = results.length; i < l; i++) {
+            //     var unique = true;
+            //     for (var j = 0, k = out.length; j < k; j++) {
+            //         if (results[i].code === out[j].code) {
+            //             unique = false;
+            //         }
+            //     }
+            //     if (unique) {
+            //         out.push(results[i]);
+            //     }
+            // }
+                cb(null, assignments);
+            // })
         }
         }) 
     };
