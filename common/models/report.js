@@ -508,17 +508,20 @@ module.exports = function(Report) {
     })
 
 //get assignment project account
-    Report.getAssignmentInProject = function(account_id,project_id,cb){
-        app.models.Assignment.find({where:{accountId: account_id}},function(err, assignments){
+    Report.getAssignmentInProject = function(account_id,cb){
+        app.models.Assignment.find({include:"task",where:{accountId: account_id}},function(err, assignments){
         if(err || account_id === 0)
             return cb(err);
         else {
             var arr = [];
-            for(var a of assignments){   
-                if(a.projectId===project_id){
-                    arr.push(a);
-                }        
-            }
+            var newData = {};
+            var a;
+            
+            // for(var a of assignments){   
+            //     if(a.projectId===project_id){
+            //         console.log("ada kok")
+            //         arr.push(a);
+            //     }        
             cb(null,arr);
         }
         }) 
@@ -526,8 +529,8 @@ module.exports = function(Report) {
 
     Report.remoteMethod("getAssignmentInProject",
     {
-        accepts: [{ arg: 'account_id', type: 'string'},{ arg: 'project_id', type: 'string'}],
-        http: { path:"/account/:account_id/:project_id/assignments", verb: "get", errorStatus: 401,},
+        accepts: [{ arg: 'account_id', type: 'string'}],
+        http: { path:"/account/:account_id/assignments/project", verb: "get", errorStatus: 401,},
         description: ["Mengambil assignment yang telah open dari setiap akun."],
         returns: {arg: "assignments", type: "array",root:true}
     })
